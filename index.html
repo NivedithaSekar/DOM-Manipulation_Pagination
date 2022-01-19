@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1 id="title">DOM Pagination task</h1>
+        <p id="description">Pagination is the process of dividing a document/available data into discrete pages with data to be displayed defined per page.</p>
+    </div>
+    <div class="container">
+        <center>
+            <form method="post" action="javascript:displayData(1);" > 
+                <label for="userPerPage">Enter user per page details</label>
+                <input type="number" placeholder="&lt;=100" max="100" min="1" id="userPerPage" name="userPerPage" required/>
+                <button type="submit">Go</button>
+            </form>
+        </center>
+         <div id="list-container" class="table-responsive"></div>
+         <div id="buttons">
+         </div>
+    </div>
+     <script src="https://app.zenclass.in/sheets/v1/js/zen/suite/bundle.js"></script>
+     <script src="script.js"></script>
+</body>
+</html>
