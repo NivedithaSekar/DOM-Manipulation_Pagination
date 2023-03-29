@@ -24,6 +24,8 @@ async function displayData(pageNumber){
     let startingIndex = (usersPerPage*pageNumber)-usersPerPage;
     list_container.innerHTML = ""
     pages.innerHTML=""
+    const listOfPages = await pagination(pageNumber,numberOfPages)
+    createPages(listOfPages);
 
     //displaying user Data
     userList.slice(startingIndex,startingIndex+usersPerPage).forEach(data => {
@@ -36,32 +38,77 @@ async function displayData(pageNumber){
     })
 
     //Pagination
-    //prev page button
-    const prevPage = document.createElement('button');
-    prevPage.setAttribute('onclick',`displayData(${pageNumber-1})`);
-    prevPage.innerText = "<<";
-    pages.appendChild(prevPage);
-    //for first page, previous button should be disabled
-    if(pageNumber == 1){
-        prevPage.setAttribute('disabled',"true");
-    }
     //pages button
-    for(let i = 1; i <= numberOfPages; i++){
-        const page= document.createElement('button');
-        page.setAttribute('onclick',`displayData(${i})`);
-        if(i == pageNumber){
-            page.setAttribute('class','active');
+    function pagination(current, last) {
+        var current = current,
+            last = last,
+            delta = 2,
+            left = current - delta,
+            right = current + delta + 1,
+            range = [],
+            rangeWithDots = [],
+            l;
+    
+        for (let i = 1; i <= last; i++) {
+            if (i == 1 || i == last || i >= left && i < right) {
+                range.push(i);
+            }
         }
-        page.innerText = i;
-        pages.appendChild(page);
+    
+        for (let i of range) {
+            if (l) {
+                if (i - l === 2) {
+                    rangeWithDots.push(l + 1);
+                } else if (i - l !== 1) {
+                    rangeWithDots.push('...');
+                }
+            }
+            rangeWithDots.push(i);
+            l = i;
+        }
+    
+        return rangeWithDots;
     }
-    //next page button
-    const nextPage = document.createElement('button');
-    nextPage.setAttribute('onclick',`displayData(${pageNumber+1})`);
-    nextPage.innerHTML = ">>";
-    pages.appendChild(nextPage);
-    //for last page calculated, next button should be disabled
-    if(pageNumber == numberOfPages){
-        nextPage.setAttribute('disabled',"true");
-    }  
+
+
+    function createPages(pageList){
+        console.log(pageList);
+        //prev page button
+        const prevPage = document.createElement('button');
+        prevPage.innerHTML = "<<";
+        prevPage.setAttribute('id','prevPage')
+        prevPage.setAttribute('onclick',`displayData(${pageNumber-1})`);
+        pages.appendChild(prevPage);
+
+        //for first page, previous button should be disabled
+        if(pageNumber == 1){
+            prevPage.setAttribute('disabled',"true");
+        }
+
+        //Rangelist Buttons
+        for(let i = 0 ; i<pageList.length ; i++){
+            const page= document.createElement('button');
+            if(pageList[i] != '...'){
+                page.setAttribute('onclick',`displayData(${pageList[i]})`);
+                if(pageList[i] == pageNumber){
+                     page.setAttribute('class','active');
+                }
+            }else{
+                page.style.cursor = 'not-allowed';
+            }
+            page.innerText = pageList[i];
+            pages.appendChild(page);
+        }
+         //next page button
+         const nextPage = document.createElement('button');
+         nextPage.innerHTML = ">>";
+         nextPage.setAttribute('id','nextPage');
+         nextPage.setAttribute('onclick',`displayData(${pageNumber+1})`);
+         pages.appendChild(nextPage);
+         
+         //for last page calculated, next button should be disabled
+         if(pageNumber == numberOfPages){
+             nextPage.setAttribute('disabled',"true");
+     }  
+    }
 }
