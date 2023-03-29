@@ -52,3 +52,7 @@ button:not([disabled]):hover{
 button.active{
     background-color: #b9bfcc;
 }
+
+#error_justification{
+    color: red;
+}

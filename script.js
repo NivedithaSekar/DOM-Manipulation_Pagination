@@ -30,7 +30,7 @@ async function displayData(pageNumber){
     //displaying user Data
     userList.slice(startingIndex,startingIndex+usersPerPage).forEach(data => {
         const userDiv = document.createElement('div');
-        userDiv.setAttribute('class',"table table-bordered user-container");
+        userDiv.setAttribute('class',"user-container");
         userDiv.innerHTML = `<p> ID: ${data.id}</p>
         <p>Name: ${data.name}</p>
         <p>Email: ${data.email}</p>`;
